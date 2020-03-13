@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { reset } from 'redux-form'; // added
-import { GET_TODOS , ADD_TODO , DELETE_TODO  , GET_TODO} from './types';
+import { GET_TODOS, GET_TODO, ADD_TODO, DELETE_TODO, EDIT_TODO } from './types'; // added EDIT_TODO
 
 // GET TODOS
 export const getTodos = () => async dispatch => {
@@ -9,6 +9,16 @@ export const getTodos = () => async dispatch => {
     type: GET_TODOS,
     payload: res.data
   });
+};
+
+// EDIT TODO
+export const editTodo = (id, formValues) => async dispatch => {
+  const res = await axios.patch(`/api/todos/${id}/`, formValues);
+  dispatch({
+    type: EDIT_TODO,
+    payload: res.data
+  });
+  history.push('/');
 };
 
 //ADD TODOS
